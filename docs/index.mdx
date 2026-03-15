@@ -12,7 +12,7 @@ title: "Introduction"
   src="/images/logo/full-dark.svg"
 />
 
-DBHub is a zero-dependency, token efficient MCP server implementing the Model Context Protocol server interface. This lightweight gateway allows MCP-compatible clients to connect to and explore different databases.
+Badger DB MCP is a zero-dependency, token efficient MCP server implementing the Model Context Protocol server interface. This lightweight gateway allows MCP-compatible clients to connect to and explore different databases.
 
 ```
  +------------------+    +--------------+    +------------------+
@@ -22,7 +22,7 @@ DBHub is a zero-dependency, token efficient MCP server implementing the Model Co
  |                  |    |              |    |                  |
  |  Claude Code     +--->+              +--->+    SQL Server    |
  |                  |    |              |    |                  |
- |  Cursor          +--->+    DBHub     +--->+    SQLite        |
+ |  Cursor          +--->+  Badger DB  +--->+    SQLite        |
  |                  |    |              |    |                  |
  |  VS Code         +--->+              +--->+    MySQL         |
  |                  |    |              |    |                  |
@@ -37,9 +37,9 @@ DBHub is a zero-dependency, token efficient MCP server implementing the Model Co
 
 PostgreSQL, MySQL, SQL Server, MariaDB, and SQLite.
 
-## Why DBHub?
+## Why Badger DB MCP?
 
-DBHub brings powerful database capabilities to AI coding assistants:
+Badger DB MCP brings powerful database capabilities to AI coding assistants:
 
 - **Local Development First**: Zero dependency, token efficient with just two MCP tools to maximize context window
 - **Multi-Database**: PostgreSQL, MySQL, MariaDB, SQL Server, and SQLite through a single interface
@@ -51,7 +51,7 @@ DBHub brings powerful database capabilities to AI coding assistants:
 
 ### MCP Tools
 
-DBHub provides AI assistants with direct database access through three core tools:
+Badger DB MCP provides AI assistants with direct database access through three core tools:
 - **[execute_sql](/tools/execute-sql)**: Run queries with transaction support and safety controls
 - **[search_objects](/tools/search-objects)**: Explore schemas, tables, columns, indexes, and procedures
 - **[Custom Tools](/tools/custom-tools)**: Define reusable, parameterized SQL operations
@@ -68,7 +68,7 @@ flowchart TB
     User["Human User"]
 
     %% Workbench
-    WB["DBHub Workbench"]
+    WB["Badger DB MCP Workbench"]
 
     %% AI Agent with MCP Client
     subgraph Agent["AI Agent"]
@@ -79,7 +79,7 @@ flowchart TB
     Config["dbhub.toml"]
 
     %% DBHub Server
-    subgraph DBHub["DBHub Server"]
+    subgraph DBHub["Badger DB MCP Server"]
         MCP["/mcp endpoint"]
         subgraph Tools["MCP Tools"]
             ES["execute_sql"]
@@ -103,16 +103,16 @@ flowchart TB
     Tools --> Databases
 ```
 
-DBHub acts as a gateway between databases and AI agents. AI agents access databases through the `/mcp` endpoint using MCP tools, while the Workbench provides direct browser-based access for humans.
+Badger DB MCP acts as a gateway between databases and AI agents. AI agents access databases through the `/mcp` endpoint using MCP tools, while the Workbench provides direct browser-based access for humans.
 
 ## Getting Started
 
 <CardGroup cols={2}>
   <Card title="Installation" icon="download" href="/installation">
-    Install DBHub using Docker, NPM, or pre-built binaries
+    Install Badger DB MCP using Docker, NPM, or pre-built binaries
   </Card>
 
   <Card title="Quickstart" icon="rocket" href="/quickstart">
-    Get DBHub running with your first database connection
+    Get Badger DB MCP running with your first database connection
   </Card>
 </CardGroup>

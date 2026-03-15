@@ -1,6 +1,6 @@
 ## Database Access
 
-This project provides an MCP server (DBHub) for secure SQL access to the development database.
+This project provides an MCP server (Badger DB MCP) for secure SQL access to the development database.
 
 AI agents can execute SQL queries. In read-only mode (recommended for production):
 

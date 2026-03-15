@@ -4,7 +4,7 @@
   "fonts": {
     "family": "DM Sans"
   },
-  "name": "DBHub, Minimal Database MCP Server",
+  "name": "Badger DB MCP, Minimal Database MCP Server",
   "colors": {
     "primary": "#335DFF",
     "light": "#E8ECFF",
@@ -43,7 +43,7 @@
         "tab": "Blog",
         "pages": [
           "blog/state-of-postgres-mcp-servers-2025",
-          "blog/postgres-mcp-server-review-dbhub",
+          "blog/postgres-mcp-server-review-badger-db-mcp",
           "blog/postgres-mcp-server-review-supabase-mcp",
           "blog/postgres-mcp-server-review-mcp-toolbox"
         ]
@@ -57,13 +57,12 @@
   "navbar": {
     "primary": {
       "type": "github",
-      "href": "https://github.com/bytebase/dbhub"
+      "href": "https://github.com/ajgreyling/badger-db-mcp"
     }
   },
   "footer": {
     "socials": {
-      "github": "https://github.com/bytebase/dbhub",
-      "x": "https://x.com/Bytebase"
+      "github": "https://github.com/ajgreyling/badger-db-mcp"
     }
   },
   "contextual": {
@@ -76,12 +75,7 @@
   },
   "seo": {
     "metatags": {
-      "canonical": "https://dbhub.ai"
-    }
-  },
-  "integrations": {
-    "plausible": {
-      "domain": "dbhub.ai"
+      "canonical": "https://github.com/ajgreyling/badger-db-mcp"
     }
   }
 }

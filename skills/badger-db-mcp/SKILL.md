@@ -1,22 +1,22 @@
 ---
-name: dbhub
-description: Guide for querying databases through DBHub MCP server. Use this skill whenever you need to explore database schemas, inspect tables, or run SQL queries via DBHub's MCP tools (search_objects, execute_sql). Activates on any database query task, schema exploration, data retrieval, or SQL execution through MCP — even if the user just says "check the database" or "find me some data." This skill ensures you follow the correct explore-first workflow instead of guessing table structures.
+name: badger-db-mcp
+description: Guide for querying databases through Badger DB MCP server. Use this skill whenever you need to explore database schemas, inspect tables, or run SQL queries via Badger DB MCP's MCP tools (search_objects, execute_sql). Activates on any database query task, schema exploration, data retrieval, or SQL execution through MCP — even if the user just says "check the database" or "find me some data." This skill ensures you follow the correct explore-first workflow instead of guessing table structures.
 ---
 
-# DBHub Database Query Guide
+# Badger DB MCP Database Query Guide
 
-When working with databases through DBHub's MCP server, always follow the **explore-then-query** pattern. Jumping straight to SQL without understanding the schema is the most common mistake — it leads to failed queries, wasted tokens, and frustrated users.
+When working with databases through Badger DB MCP's MCP server, always follow the **explore-then-query** pattern. Jumping straight to SQL without understanding the schema is the most common mistake — it leads to failed queries, wasted tokens, and frustrated users.
 
 ## Available Tools
 
-DBHub provides two MCP tools:
+Badger DB MCP provides two MCP tools:
 
 | Tool | Purpose |
 |------|---------|
 | `search_objects` | Explore database structure — schemas, tables, columns, indexes, procedures, functions |
 | `execute_sql` | Run SQL statements against the database |
 
-If multiple databases are configured, DBHub registers separate tools for each source (for example, `search_objects_prod_pg`, `execute_sql_staging_mysql`). Select the desired database by calling the correspondingly named tool.
+If multiple databases are configured, Badger DB MCP registers separate tools for each source (for example, `search_objects_prod_pg`, `execute_sql_staging_mysql`). Select the desired database by calling the correspondingly named tool.
 
 ## The Explore-Then-Query Workflow
 
@@ -86,7 +86,7 @@ The `detail_level` parameter controls how much information `search_objects` retu
 
 ## Working with Multiple Databases
 
-When DBHub is configured with multiple database sources, it registers separate tool instances for each source. The tool names follow the pattern `{tool}_{source_id}`:
+When Badger DB MCP is configured with multiple database sources, it registers separate tool instances for each source. The tool names follow the pattern `{tool}_{source_id}`:
 
 ```
 # Query the production PostgreSQL database

@@ -1,11 +1,11 @@
 ---
 name: testing
-description: Run and troubleshoot tests for DBHub, including unit tests, integration tests with Testcontainers, and database-specific tests. Use when asked to run tests, fix test failures, debug integration tests, troubleshoot Docker/database container issues, or add new tests. Also use when verifying code changes work correctly or when CI test failures need investigation.
+description: Run and troubleshoot tests for Badger DB MCP, including unit tests, integration tests with Testcontainers, and database-specific tests. Use when asked to run tests, fix test failures, debug integration tests, troubleshoot Docker/database container issues, or add new tests. Also use when verifying code changes work correctly or when CI test failures need investigation.
 ---
 
 # Testing Skill
 
-This skill helps you run, write, and troubleshoot tests in the DBHub project.
+This skill helps you run, write, and troubleshoot tests in the Badger DB MCP project.
 
 ## Test Commands
 

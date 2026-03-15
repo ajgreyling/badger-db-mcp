@@ -1,11 +1,11 @@
 ---
 name: fix-bug
-description: Use when given a GitHub issue URL or number to investigate and implement a fix. Triggers on "fix issue", "fix bug", "fix #123", GitHub issue URLs, or any request to resolve a reported problem from a GitHub issue. Also triggers when asked to investigate errors, diagnose failures, or debug unexpected behavior in DBHub.
+description: Use when given a GitHub issue URL or number to investigate and implement a fix. Triggers on "fix issue", "fix bug", "fix #123", GitHub issue URLs, or any request to resolve a reported problem from a GitHub issue. Also triggers when asked to investigate errors, diagnose failures, or debug unexpected behavior in Badger DB MCP.
 ---
 
 # Fix Bug from GitHub Issue
 
-Systematic workflow for turning a GitHub issue into a working fix in the DBHub codebase.
+Systematic workflow for turning a GitHub issue into a working fix in the Badger DB MCP codebase.
 
 ## Workflow
 
@@ -38,7 +38,7 @@ Extract from the issue:
 
 ## Step 3: Locate Relevant Code
 
-Use the issue details to identify which part of the codebase is affected. DBHub has a clear modular structure — most bugs fall into one of these areas:
+Use the issue details to identify which part of the codebase is affected. Badger DB MCP has a clear modular structure — most bugs fall into one of these areas:
 
 | Bug Category | Where to Look | Key Files |
 |-------------|--------------|-----------|
@@ -61,7 +61,7 @@ Search for error messages, function names, or file paths mentioned in the issue.
 ## Step 4: Reproduce
 
 **If integration tests exist for the area:**
-Write a failing test that captures the bug. DBHub's test infrastructure makes this straightforward:
+Write a failing test that captures the bug. Badger DB MCP's test infrastructure makes this straightforward:
 - Database connector bugs → extend existing integration test in `src/connectors/__tests__/`
 - Utility bugs → add cases to existing unit tests in `src/utils/__tests__/`
 - Tool handler bugs → add to `src/tools/__tests__/`

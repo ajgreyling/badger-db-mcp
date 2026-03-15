@@ -8,26 +8,26 @@ title: "Installation"
   <Tab title="npx">
     ```bash
     # PostgreSQL example
-    npx @bytebase/dbhub@latest \
+    npx badger-db-mcp \
       --transport http \
       --port 8080 \
       --dsn "postgres://user:password@localhost:5432/dbname?sslmode=disable"
 
     # Or use demo mode for testing
-    npx @bytebase/dbhub@latest --transport http --port 8080 --demo
+    npx badger-db-mcp --transport http --port 8080 --demo
     ```
   </Tab>
 
   <Tab title="Global Installation">
     ```bash
     # Install globally
-    npm install -g @bytebase/dbhub@latest
+    npm install -g badger-db-mcp
 
     # Run the server
-    dbhub --transport http --port 8080 --dsn "postgres://..."
+    badger-db-mcp --transport http --port 8080 --dsn "postgres://..."
 
     # Or use demo mode for testing
-    dbhub --transport http --port 8080 --demo
+    badger-db-mcp --transport http --port 8080 --demo
     ```
   </Tab>
 </Tabs>
@@ -38,18 +38,18 @@ title: "Installation"
   <Tab title="Docker Run">
     ```bash
     docker run --rm --init \
-      --name dbhub \
+      --name badger-db-mcp \
       --publish 8080:8080 \
-      bytebase/dbhub \
+      badger-db-mcp \
       --transport http \
       --port 8080 \
       --dsn "postgres://user:password@localhost:5432/dbname?sslmode=disable"
 
     # Or use demo mode for testing
     docker run --rm --init \
-      --name dbhub \
+      --name badger-db-mcp \
       --publish 8080:8080 \
-      bytebase/dbhub \
+      badger-db-mcp \
       --transport http \
       --port 8080 \
       --demo
@@ -65,17 +65,17 @@ title: "Installation"
   </Tab>
 
   <Tab title="Docker Compose">
-    For development environments using Docker Compose, add DBHub to your `docker-compose.yml`:
+    For development environments using Docker Compose, add Badger DB MCP to your `docker-compose.yml`:
 
     ```yaml docker-compose.yml
     services:
-      dbhub:
-        image: bytebase/dbhub:latest
-        container_name: dbhub
+      badger-db-mcp:
+        image: badger-db-mcp:latest
+        container_name: badger-db-mcp
         ports:
           - "8080:8080"
         environment:
-          - DBHUB_LOG_LEVEL=info
+          - BADGER_DB_MCP_LOG_LEVEL=info
         command:
           - --transport
           - http
@@ -97,7 +97,7 @@ title: "Installation"
 
 ## Client Integration
 
-Once DBHub is installed and running, configure your MCP client to connect to it.
+Once Badger DB MCP is installed and running, configure your MCP client to connect to it.
 
 ### Claude Code
 
@@ -108,24 +108,24 @@ Once DBHub is installed and running, configure your MCP client to connect to it.
       For local database connections, use stdio transport:
 
       ```bash
-      claude mcp add --transport stdio dbhub -- npx @bytebase/dbhub@latest --transport stdio --dsn "postgres://user:password@localhost:5432/dbname"
+      claude mcp add --transport stdio badger-db-mcp -- npx badger-db-mcp --transport stdio --dsn "postgres://user:password@localhost:5432/dbname"
       ```
 
       <Note>
-      The `--` separates Claude's flags from DBHub's arguments. Everything after `--` is the DBHub command.
+      The `--` separates Claude's flags from Badger DB MCP's arguments. Everything after `--` is the Badger DB MCP command.
       </Note>
       </Tab>
       <Tab title="HTTP">
       For remote or shared database servers, use HTTP transport:
 
       ```bash
-      claude mcp add --transport http dbhub http://localhost:8080/mcp
+      claude mcp add --transport http badger-db-mcp http://localhost:8080/mcp
       ```
 
-      This connects to a DBHub server running with HTTP transport:
+      This connects to a Badger DB MCP server running with HTTP transport:
 
       ```bash
-      npx @bytebase/dbhub@latest --transport http --port 8080 --dsn "postgres://user:password@localhost:5432/dbname"
+      npx badger-db-mcp --transport http --port 8080 --dsn "postgres://user:password@localhost:5432/dbname"
       ```
       </Tab>
     </Tabs>
@@ -139,11 +139,11 @@ Once DBHub is installed and running, configure your MCP client to connect to it.
       ```json .mcp.json
       {
         "mcpServers": {
-          "dbhub": {
+          "badger-db-mcp": {
             "type": "stdio",
             "command": "npx",
             "args": [
-              "@bytebase/dbhub@latest",
+              "badger-db-mcp",
               "--transport",
               "stdio",
               "--dsn",
@@ -159,11 +159,11 @@ Once DBHub is installed and running, configure your MCP client to connect to it.
       ```json .mcp.json
       {
         "mcpServers": {
-          "dbhub": {
+          "badger-db-mcp": {
             "type": "stdio",
             "command": "npx",
             "args": [
-              "@bytebase/dbhub@latest",
+              "badger-db-mcp",
               "--transport",
               "stdio",
               "--dsn",
@@ -179,7 +179,7 @@ Once DBHub is installed and running, configure your MCP client to connect to it.
       ```json .mcp.json
       {
         "mcpServers": {
-          "dbhub": {
+          "badger-db-mcp": {
             "type": "http",
             "url": "http://localhost:8080/mcp"
           }
@@ -194,7 +194,7 @@ Once DBHub is installed and running, configure your MCP client to connect to it.
     For personal configuration across all projects:
 
     ```bash
-    claude mcp add --scope user dbhub -- npx @bytebase/dbhub@latest --transport stdio --dsn "postgres://user:password@localhost:5432/dbname"
+    claude mcp add --scope user badger-db-mcp -- npx badger-db-mcp --transport stdio --dsn "postgres://user:password@localhost:5432/dbname"
     ```
 
     Or manually edit the user configuration file:
@@ -210,7 +210,7 @@ Once DBHub is installed and running, configure your MCP client to connect to it.
   </Tab>
 </Tabs>
 
-**Using DBHub:**
+**Using Badger DB MCP:**
 
 Start Claude Code in your project directory:
 
@@ -218,7 +218,7 @@ Start Claude Code in your project directory:
 claude
 ```
 
-Verify DBHub is loaded:
+Verify Badger DB MCP is loaded:
 
 ```bash
 /mcp
@@ -229,7 +229,7 @@ Verify DBHub is loaded:
 
 ### Claude Desktop
 
-![Claude Desktop with DBHub](https://raw.githubusercontent.com/bytebase/dbhub/main/docs/images/claude-desktop.webp)
+![Claude Desktop with Badger DB MCP](https://raw.githubusercontent.com/ajgreyling/badger-db-mcp/main/docs/images/claude-desktop.webp)
 
 <Tabs>
   <Tab title="MacOS/Linux">
@@ -238,10 +238,10 @@ Verify DBHub is loaded:
     ```json ~/Library/Application Support/Claude/claude_desktop_config.json
     {
       "mcpServers": {
-        "dbhub": {
+        "badger-db-mcp": {
           "command": "npx",
           "args": [
-            "@bytebase/dbhub@latest",
+            "badger-db-mcp",
             "--transport",
             "stdio",
             "--dsn",
@@ -259,10 +259,10 @@ Verify DBHub is loaded:
     ```json
     {
       "mcpServers": {
-        "dbhub": {
+        "badger-db-mcp": {
           "command": "npx",
           "args": [
-            "@bytebase/dbhub@latest",
+            "badger-db-mcp",
             "--transport",
             "stdio",
             "--dsn",
@@ -280,10 +280,10 @@ Verify DBHub is loaded:
     ```json ~/Library/Application Support/Claude/claude_desktop_config.json
     {
       "mcpServers": {
-        "dbhub": {
+        "badger-db-mcp": {
           "command": "npx",
           "args": [
-            "@bytebase/dbhub@latest",
+            "badger-db-mcp",
             "--transport",
             "stdio",
             "--demo"
@@ -305,14 +305,14 @@ Verify DBHub is loaded:
 
 ### Cursor
 
-![Cursor with DBHub](https://raw.githubusercontent.com/bytebase/dbhub/main/docs/images/cursor.webp)
+![Cursor with Badger DB MCP](https://raw.githubusercontent.com/ajgreyling/badger-db-mcp/main/docs/images/cursor.webp)
 
 <Tabs>
   <Tab title="One-Click Install">
-    Click the link below to install DBHub in Cursor:
+    Click the link below to install Badger DB MCP in Cursor:
 
     <a href="cursor://anysphere.cursor-deeplink/mcp/install?name=dbhub&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyJAYnl0ZWJhc2UvZGJodWIiLCItLXRyYW5zcG9ydCIsInN0ZGlvIiwiLS1kc24iLCJwb3N0Z3JlczovL3VzZXI6cGFzc3dvcmRAbG9jYWxob3N0OjU0MzIvZGJuYW1lIl19">
-      <img src="https://cursor.com/deeplink/mcp-install-dark.svg" alt="Install DBHub MCP server in Cursor" height="32" />
+      <img src="https://cursor.com/deeplink/mcp-install-dark.svg" alt="Install Badger DB MCP server in Cursor" height="32" />
     </a>
 
     After installing, edit the DSN in your Cursor MCP settings to point to your database.
@@ -326,10 +326,10 @@ Verify DBHub is loaded:
     ```json ~/.cursor/mcp.json
     {
       "mcpServers": {
-        "dbhub": {
+        "badger-db-mcp": {
           "command": "npx",
           "args": [
-            "@bytebase/dbhub@latest",
+            "badger-db-mcp",
             "--transport",
             "stdio",
             "--dsn",
@@ -345,10 +345,10 @@ Verify DBHub is loaded:
     ```json %USERPROFILE%\.cursor\mcp.json
     {
       "mcpServers": {
-        "dbhub": {
+        "badger-db-mcp": {
           "command": "npx",
           "args": [
-            "@bytebase/dbhub@latest",
+            "badger-db-mcp",
             "--transport",
             "stdio",
             "--dsn",
@@ -368,7 +368,7 @@ Verify DBHub is loaded:
     ```json ~/.cursor/mcp.json
     {
       "mcpServers": {
-        "dbhub": {
+        "badger-db-mcp": {
           "url": "http://localhost:8080/mcp"
         }
       }
@@ -380,17 +380,17 @@ Verify DBHub is loaded:
     ```json %USERPROFILE%\.cursor\mcp.json
     {
       "mcpServers": {
-        "dbhub": {
+        "badger-db-mcp": {
           "url": "http://localhost:8080/mcp"
         }
       }
     }
     ```
 
-    This connects to a DBHub server running with HTTP transport:
+    This connects to a Badger DB MCP server running with HTTP transport:
 
     ```bash
-    npx @bytebase/dbhub@latest --transport http --port 8080 --dsn "postgres://user:password@localhost:5432/dbname"
+    npx badger-db-mcp --transport http --port 8080 --dsn "postgres://user:password@localhost:5432/dbname"
     ```
   </Tab>
 
@@ -403,7 +403,7 @@ Verify DBHub is loaded:
         "project-db": {
           "command": "npx",
           "args": [
-            "@bytebase/dbhub@latest",
+            "badger-db-mcp",
             "--transport",
             "stdio",
             "--config",
@@ -430,11 +430,11 @@ VS Code has native MCP support through GitHub Copilot. Create `.vscode/mcp.json`
     ```json .vscode/mcp.json
     {
       "servers": {
-        "dbhub": {
+        "badger-db-mcp": {
           "type": "stdio",
           "command": "npx",
           "args": [
-            "@bytebase/dbhub@latest",
+            "badger-db-mcp",
             "--transport",
             "stdio",
             "--dsn",
@@ -452,7 +452,7 @@ VS Code has native MCP support through GitHub Copilot. Create `.vscode/mcp.json`
     ```json .vscode/mcp.json
     {
       "servers": {
-        "dbhub": {
+        "badger-db-mcp": {
           "type": "http",
           "url": "http://localhost:8080/mcp"
         }
@@ -460,10 +460,10 @@ VS Code has native MCP support through GitHub Copilot. Create `.vscode/mcp.json`
     }
     ```
 
-    This connects to a DBHub server running with HTTP transport:
+    This connects to a Badger DB MCP server running with HTTP transport:
 
     ```bash
-    npx @bytebase/dbhub@latest --transport http --port 8080 --dsn "postgres://user:password@localhost:5432/dbname"
+    npx badger-db-mcp --transport http --port 8080 --dsn "postgres://user:password@localhost:5432/dbname"
     ```
   </Tab>
 
@@ -481,11 +481,11 @@ VS Code has native MCP support through GitHub Copilot. Create `.vscode/mcp.json`
         }
       ],
       "servers": {
-        "dbhub": {
+        "badger-db-mcp": {
           "type": "stdio",
           "command": "npx",
           "args": [
-            "@bytebase/dbhub@latest",
+            "badger-db-mcp",
             "--transport",
             "stdio",
             "--dsn",
@@ -503,11 +503,11 @@ VS Code has native MCP support through GitHub Copilot. Create `.vscode/mcp.json`
     ```json .vscode/mcp.json
     {
       "servers": {
-        "dbhub": {
+        "badger-db-mcp": {
           "type": "stdio",
           "command": "npx",
           "args": [
-            "@bytebase/dbhub@latest",
+            "badger-db-mcp",
             "--transport",
             "stdio",
             "--config",
@@ -535,8 +535,8 @@ VS Code has native MCP support through GitHub Copilot. Create `.vscode/mcp.json`
 
     When prompted, you'll need to provide:
     - **Server type**: select `local` (the default)
-    - **Server name**: for example, `dbhub`
-    - **Command**: `npx @bytebase/dbhub@latest`
+    - **Server name**: for example, `badger-db-mcp`
+    - **Command**: `npx badger-db-mcp`
     - **Arguments**: transport (e.g., `--transport stdio`) and connection details (either `--dsn` connection string or `--demo` for the demo database)
   </Tab>
 
@@ -546,10 +546,10 @@ VS Code has native MCP support through GitHub Copilot. Create `.vscode/mcp.json`
     ```json ~/.copilot/mcp-config.json
     {
       "mcpServers": {
-        "dbhub": {
+        "badger-db-mcp": {
           "command": "npx",
           "args": [
-            "@bytebase/dbhub@latest",
+            "badger-db-mcp",
             "--transport",
             "stdio",
             "--dsn",
@@ -567,10 +567,10 @@ VS Code has native MCP support through GitHub Copilot. Create `.vscode/mcp.json`
     ```json ~/.copilot/mcp-config.json
     {
       "mcpServers": {
-        "dbhub": {
+        "badger-db-mcp": {
           "command": "npx",
           "args": [
-            "@bytebase/dbhub@latest",
+            "badger-db-mcp",
             "--transport",
             "stdio",
             "--demo"
@@ -591,24 +591,24 @@ VS Code has native MCP support through GitHub Copilot. Create `.vscode/mcp.json`
   <Tab title="CLI">
     ```bash
     # Connect to your database
-    codex mcp add dbhub -- npx @bytebase/dbhub@latest --transport stdio --dsn "postgres://user:password@localhost:5432/dbname"
+    codex mcp add badger-db-mcp -- npx badger-db-mcp --transport stdio --dsn "postgres://user:password@localhost:5432/dbname"
 
     # Or use demo mode for testing
-    codex mcp add dbhub -- npx @bytebase/dbhub@latest --transport stdio --demo
+    codex mcp add badger-db-mcp -- npx badger-db-mcp --transport stdio --demo
     ```
   </Tab>
 
   <Tab title="TOML">
     ```toml ~/.codex/config.toml
     # Connect to your database
-    [mcp_servers.dbhub]
+    [mcp_servers.badger-db-mcp]
     command = "npx"
-    args = ["@bytebase/dbhub@latest", "--transport", "stdio", "--dsn", "postgres://user:password@localhost:5432/dbname"]
+    args = ["badger-db-mcp", "--transport", "stdio", "--dsn", "postgres://user:password@localhost:5432/dbname"]
 
     # Or use demo mode for testing
-    [mcp_servers.dbhub]
+    [mcp_servers.badger-db-mcp]
     command = "npx"
-    args = ["@bytebase/dbhub@latest", "--transport", "stdio", "--demo"]
+    args = ["badger-db-mcp", "--transport", "stdio", "--demo"]
     ```
   </Tab>
 
@@ -618,10 +618,10 @@ VS Code has native MCP support through GitHub Copilot. Create `.vscode/mcp.json`
 
     🔌  MCP Tools
 
-      • dbhub
+      • badger-db-mcp
         • Status: enabled
         • Auth: Unsupported
-        • Command: npx -y @bytebase/dbhub@latest --demo
+        • Command: npx -y badger-db-mcp --demo
         • Tools: execute_sql
         • Resources: schemas (db://schemas)
         • Resource templates: tables_in_schema (db://schemas/{schemaName}/tables), table_structure_in_schema (db://schemas/{schemaName}/
@@ -636,10 +636,10 @@ VS Code has native MCP support through GitHub Copilot. Create `.vscode/mcp.json`
 
 ### Dify
 
-DBHub must be running as an HTTP server for Dify to connect. Start DBHub with HTTP transport:
+Badger DB MCP must be running as an HTTP server for Dify to connect. Start Badger DB MCP with HTTP transport:
 
 ```bash
-npx @bytebase/dbhub@latest --transport http --port 8080 --dsn "postgres://user:password@localhost:5432/dbname"
+npx badger-db-mcp --transport http --port 8080 --dsn "postgres://user:password@localhost:5432/dbname"
 ```
 
 **Configuration:**
@@ -647,17 +647,17 @@ npx @bytebase/dbhub@latest --transport http --port 8080 --dsn "postgres://user:p
 1. In Dify, navigate to **Tools → MCP**
 2. Click **Add MCP Server (HTTP)**
 3. Configure the server:
-   - **Server URL**: `http://localhost:8080/mcp` (or your DBHub host)
-   - **Name**: `DBHub`
-   - **Server Identifier**: `dbhub` (permanent, max 24 characters)
+   - **Server URL**: `http://localhost:8080/mcp` (or your Badger DB MCP host)
+   - **Name**: `Badger DB MCP`
+   - **Server Identifier**: `badger-db-mcp` (permanent, max 24 characters)
 
-4. Click save. Dify will automatically discover DBHub's tools.
+4. Click save. Dify will automatically discover Badger DB MCP's tools.
 
-**Using DBHub Tools:**
+**Using Badger DB MCP Tools:**
 
-Once connected, DBHub tools are available in:
+Once connected, Badger DB MCP tools are available in:
 
-- **Agents**: Tools appear alongside built-in tools, use "Add All" to enable all DBHub tools
+- **Agents**: Tools appear alongside built-in tools, use "Add All" to enable all Badger DB MCP tools
 - **Workflows**: Tools appear as available node types
 
 **Multi-Database Setup:**
@@ -665,7 +665,7 @@ Once connected, DBHub tools are available in:
 For multiple databases, use a config file:
 
 ```bash
-npx @bytebase/dbhub@latest --transport http --port 8080 --config /path/to/dbhub.toml
+npx badger-db-mcp --transport http --port 8080 --config /path/to/dbhub.toml
 ```
 
 **Demo Mode:**
@@ -673,30 +673,30 @@ npx @bytebase/dbhub@latest --transport http --port 8080 --config /path/to/dbhub.
 For testing, use the built-in demo database:
 
 ```bash
-npx @bytebase/dbhub@latest --transport http --port 8080 --demo
+npx badger-db-mcp --transport http --port 8080 --demo
 ```
 
 **Limitations:**
 - Dify only supports HTTP transport (not stdio)
-- DBHub must be network-accessible from Dify
+- Badger DB MCP must be network-accessible from Dify
 
 **References:**
 - [Dify MCP Documentation](https://docs.dify.ai/en/guides/tools/mcp)
 
 ### LibreChat
 
-DBHub can be integrated with [LibreChat](https://www.librechat.ai/) using either **stdio** or **Streamable HTTP** transport.
+Badger DB MCP can be integrated with [LibreChat](https://www.librechat.ai/) using either **stdio** or **Streamable HTTP** transport.
 
 <Tabs>
   <Tab title="stdio">
     ```yaml librechat.yaml
     mcpServers:
-      dbhub:
+      badger-db-mcp:
         type: stdio
         command: npx
         args:
           - -y
-          - "@bytebase/dbhub@latest"
+          - "badger-db-mcp"
           - "--dsn"
           - "postgres://user:password@localhost:5432/dbname"
         timeout: 60000
@@ -706,12 +706,12 @@ DBHub can be integrated with [LibreChat](https://www.librechat.ai/) using either
 
     ```yaml librechat.yaml
     mcpServers:
-      dbhub:
+      badger-db-mcp:
         type: stdio
         command: npx
         args:
           - -y
-          - "@bytebase/dbhub@latest"
+          - "badger-db-mcp"
           - "--demo"
         timeout: 60000
     ```
@@ -720,14 +720,14 @@ DBHub can be integrated with [LibreChat](https://www.librechat.ai/) using either
   <Tab title="Streamable HTTP">
     ```yaml librechat.yaml
     mcpServers:
-      dbhub:
+      badger-db-mcp:
         type: streamable-http
         url: http://host.docker.internal:8080/mcp
         timeout: 60000
     ```
 
     <Note>
-      **Docker Networking:** When LibreChat runs in Docker (e.g., with docker-compose), use `host.docker.internal:8080` to connect to DBHub running on your host machine. This is Docker's special DNS name that resolves to the host's IP address.
+      **Docker Networking:** When LibreChat runs in Docker (e.g., with docker-compose), use `host.docker.internal:8080` to connect to Badger DB MCP running on your host machine. This is Docker's special DNS name that resolves to the host's IP address.
 
       For native installations, use `http://localhost:8080/mcp` instead.
     </Note>

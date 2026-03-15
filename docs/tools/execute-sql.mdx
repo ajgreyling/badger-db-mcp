@@ -113,7 +113,7 @@ readonly = true
 
 ```bash Command Line (Deprecated)
 # This flag is deprecated - use TOML configuration instead
-npx @bytebase/dbhub@latest --readonly --dsn "postgres://user:pass@localhost:5432/mydb"
+npx badger-db-mcp --readonly --dsn "postgres://user:pass@localhost:5432/mydb"
 ```
 </CodeGroup>
 
@@ -143,12 +143,12 @@ max_rows = 1000
 
 ```bash Command Line (Deprecated)
 # This flag is deprecated - use TOML configuration instead
-npx @bytebase/dbhub@latest --max-rows 1000 --dsn "..."
+npx badger-db-mcp --max-rows 1000 --dsn "..."
 ```
 </CodeGroup>
 
 - Only applied to SELECT statements, not INSERT/UPDATE/DELETE
-- If your query already has a `LIMIT` or `TOP` clause, DBHub uses the smaller value
+- If your query already has a `LIMIT` or `TOP` clause, Badger DB MCP uses the smaller value
 - Can be configured per-tool in [TOML configuration](/config/toml)
 
 ## Selective Tool Exposure
