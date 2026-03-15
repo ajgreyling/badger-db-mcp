@@ -1,6 +1,6 @@
 {
   "name": "badger-db-mcp",
-  "version": "0.19.0",
+  "version": "0.19.1",
   "mcpName": "badger-db-mcp",
   "description": "Badger DB MCP — minimal, token-efficient Database MCP Server for PostgreSQL, MySQL, SQL Server, SQLite, MariaDB",
   "repository": {
@@ -32,7 +32,11 @@
     "test": "vitest run",
     "test:unit": "vitest run --project unit",
     "test:watch": "vitest",
-    "test:integration": "vitest run --project integration"
+    "test:integration": "vitest run --project integration",
+    "prepublishOnly": "pnpm run build:backend",
+    "release": "pnpm run build && npm publish",
+    "bump:version": "node scripts/bump-version.js",
+    "prepare": "husky"
   },
   "engines": {
     "node": ">=20"
@@ -70,6 +74,7 @@
     "concurrently": "^9.2.1",
     "cross-env": "^7.0.3",
     "openapi-typescript": "^7.10.1",
+    "husky": "^9.1.7",
     "prettier": "^3.5.3",
     "testcontainers": "^11.0.3",
     "ts-node": "^10.9.2",
