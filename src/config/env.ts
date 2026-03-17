@@ -657,7 +657,7 @@ export async function resolveSourceConfigs(): Promise<{
       sources: [source],
       tools,
       source: dsnResult.isDemo ? "demo mode" : dsnResult.source,
-      defaultReadonly: readOnly,
+      ...(readOnly && { defaultReadonly: true }),
     };
   }
 

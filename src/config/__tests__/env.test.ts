@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { buildDSNFromEnvParams, resolveDSN, resolveId } from '../env.js';
+import { buildDSNFromEnvParams, resolveDSN, resolveId, allowDestructiveSql, resolveSourceConfigs } from '../env.js';
 
 // Mock toml-loader to prevent it from loading dbhub.toml during tests
 vi.mock('../toml-loader.js', () => ({
@@ -348,6 +348,64 @@ describe('Environment Configuration Tests', () => {
       expect(result!.sources).toHaveLength(1);
       expect(result!.sources[0].type).toBe('postgres');
       expect(result!.sources[0].dsn).toBe('postgres://user:my@pass:word@localhost:5432/testdb');
+    });
+  });
+
+  describe('allowDestructiveSql', () => {
+    const originalArgv = process.argv;
+
+    afterEach(() => {
+      process.argv = originalArgv;
+    });
+
+    it('should return false when --allow-destructive-sql is not passed', () => {
+      process.argv = ['node', 'script.js', '--dsn=postgres://localhost/db'];
+      expect(allowDestructiveSql()).toBe(false);
+    });
+
+    it('should return true when --allow-destructive-sql is passed', () => {
+      process.argv = ['node', 'script.js', '--allow-destructive-sql', '--dsn=postgres://localhost/db'];
+      expect(allowDestructiveSql()).toBe(true);
+    });
+
+    it('should return true when --allow-destructive-sql=true is passed', () => {
+      process.argv = ['node', 'script.js', '--allow-destructive-sql=true'];
+      expect(allowDestructiveSql()).toBe(true);
+    });
+  });
+
+  describe('resolveSourceConfigs single-DSN default readonly', () => {
+    const originalArgv = process.argv;
+
+    afterEach(() => {
+      process.argv = originalArgv;
+    });
+
+    it('should default execute_sql to readonly when --allow-destructive-sql is not passed', async () => {
+      process.env.DSN = 'postgres://user:pass@localhost:5432/mydb';
+      process.argv = ['node', 'script.js'];
+
+      const result = await resolveSourceConfigs();
+
+      expect(result).not.toBeNull();
+      expect(result!.tools).toHaveLength(2);
+      const executeSql = result!.tools!.find((t) => t.name === 'execute_sql');
+      expect(executeSql).toBeDefined();
+      expect(executeSql!.readonly).toBe(true);
+      expect(result!.defaultReadonly).toBe(true);
+    });
+
+    it('should set execute_sql readonly false when --allow-destructive-sql is passed', async () => {
+      process.env.DSN = 'postgres://user:pass@localhost:5432/mydb';
+      process.argv = ['node', 'script.js', '--allow-destructive-sql'];
+
+      const result = await resolveSourceConfigs();
+
+      expect(result).not.toBeNull();
+      const executeSql = result!.tools!.find((t) => t.name === 'execute_sql');
+      expect(executeSql).toBeDefined();
+      expect(executeSql!.readonly).toBe(false);
+      expect(result!.defaultReadonly).toBeFalsy();
     });
   });
 
