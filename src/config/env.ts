@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 
 import type { SSHTunnelConfig } from "../types/ssh.js";
 import { parseSSHConfig, looksLikeSSHAlias, getDefaultSSHConfigPath } from "../utils/ssh-config-parser.js";
-import type { SourceConfig } from "../types/config.js";
+import type { SourceConfig, ToolConfig } from "../types/config.js";
 import { loadTomlConfig } from "./toml-loader.js";
 import { parseConnectionInfoFromDSN } from "../utils/dsn-obfuscate.js";
 import { SafeURL } from "../utils/safe-url.js";
@@ -147,6 +147,16 @@ export function loadEnvFiles(): string | null {
 export function isDemoMode(): boolean {
   const args = parseCommandLineArgs();
   return args.demo === "true";
+}
+
+/**
+ * Whether destructive SQL (INSERT/UPDATE/DELETE etc.) is allowed.
+ * When false (default), the server runs in read-only mode for single-DSN config.
+ * Pass --allow-destructive-sql to enable destructive operations.
+ */
+export function allowDestructiveSql(): boolean {
+  const args = parseCommandLineArgs();
+  return args["allow-destructive-sql"] === "true";
 }
 
 
@@ -532,7 +542,12 @@ export function resolveSSHConfig(): { config: SSHTunnelConfig; source: string } 
  * Priority: TOML config (--config flag or ./dbhub.toml) > single DSN/env vars
  * Returns array of source configs and the source of the configuration
  */
-export async function resolveSourceConfigs(): Promise<{ sources: SourceConfig[]; tools?: import("../types/config.js").ToolConfig[]; source: string } | null> {
+export async function resolveSourceConfigs(): Promise<{
+  sources: SourceConfig[];
+  tools?: ToolConfig[];
+  source: string;
+  defaultReadonly?: boolean;
+} | null> {
   // 1. Try loading from TOML configuration file (skip if --demo flag is set)
   if (!isDemoMode()) {
     const tomlConfig = loadTomlConfig();
@@ -631,10 +646,18 @@ export async function resolveSourceConfigs(): Promise<{ sources: SourceConfig[];
       source.init_script = getSqliteInMemorySetupSql();
     }
 
+    // Single-DSN mode: default to read-only unless --allow-destructive-sql is passed
+    const readOnly = !allowDestructiveSql();
+    const tools: ToolConfig[] = [
+      { name: "execute_sql", source: sourceId, readonly: readOnly },
+      { name: "search_objects", source: sourceId },
+    ];
+
     return {
       sources: [source],
-      tools: [],
+      tools,
       source: dsnResult.isDemo ? "demo mode" : dsnResult.source,
+      defaultReadonly: readOnly,
     };
   }
 

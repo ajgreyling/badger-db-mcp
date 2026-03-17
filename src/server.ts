@@ -25,7 +25,7 @@ const packageJsonPath = path.join(__dirname, "..", "package.json");
 const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf8"));
 
 // Server info
-export const SERVER_NAME = "DBHub MCP Server";
+export const SERVER_NAME = "Badger DB MCP Server";
 export const SERVER_VERSION = packageJson.version;
 
 /**
@@ -36,13 +36,14 @@ export function generateBanner(version: string, modes: string[] = []): string {
   const modeText = modes.length > 0 ? ` [${modes.join(' | ')}]` : '';
 
   return `
- _____  ____  _   _       _     
-|  __ \\|  _ \\| | | |     | |    
-| |  | | |_) | |_| |_   _| |__  
-| |  | |  _ <|  _  | | | | '_ \\ 
-| |__| | |_) | | | | |_| | |_) |
-|_____/|____/|_| |_|\\__,_|_.__/ 
-                                
+  _               _                 
+ | |             | |                
+ | |__   __ _  __| | __ _  ___ _ __ 
+ | '_ \\ / _\` |/ _\` |/ _\` |/ _ \\ '__|
+ | |_) | (_| | (_| | (_| |  __/ |   
+ |_.__/ \\__,_|\\__,_|\\__, |\\___|_|   
+                     __/ |          
+                    |___/           
 v${version}${modeText} - Minimal Database MCP Server
 `;
 }
@@ -141,6 +142,11 @@ See documentation for more details on configuring database connections.
     if (isDemo) {
       activeModes.push("DEMO");
       modeDescriptions.push("using sample employee database");
+    }
+
+    if (sourceConfigsData.defaultReadonly) {
+      activeModes.push("READ-ONLY");
+      modeDescriptions.push("destructive SQL disabled (use --allow-destructive-sql to enable)");
     }
 
     // Output mode information

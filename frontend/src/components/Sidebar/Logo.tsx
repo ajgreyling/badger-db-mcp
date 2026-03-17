@@ -5,9 +5,9 @@ export default function Logo() {
     <div className="px-6 py-4">
       <Link to="/" className="block hover:opacity-80 transition-opacity">
         <img
-          src="/logo-full-light.svg"
-          alt="DBHub"
-          className="w-[200px] h-auto"
+          src="/badger-logo.svg"
+          alt="Badger DB MCP"
+          className="h-10 w-auto"
         />
       </Link>
     </div>
