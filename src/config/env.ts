@@ -64,8 +64,12 @@ export function parseCommandLineArgs() {
         parsedManually[key] = args[i + 1];
         i++; // Skip the next argument as it's the value
       } else {
-        // Handle --key format (boolean flag)
-        parsedManually[key] = "true";
+        // Handle --key format (boolean flag). For allow-destructive-sql we require explicit =true.
+        if (key === "allow-destructive-sql") {
+          parsedManually[key] = "";
+        } else {
+          parsedManually[key] = "true";
+        }
       }
     }
   }
@@ -150,9 +154,9 @@ export function isDemoMode(): boolean {
 }
 
 /**
- * Whether destructive SQL (INSERT/UPDATE/DELETE etc.) is allowed.
- * When false (default), the server runs in read-only mode for single-DSN config.
- * Pass --allow-destructive-sql to enable destructive operations.
+ * Whether destructive SQL (INSERT/UPDATE/DELETE/MERGE etc.) is allowed.
+ * When false (default), the server runs in read-only mode; only SELECT and other read-only SQL is allowed.
+ * Pass --allow-destructive-sql=true to allow write/delete/update/merge commands.
  */
 export function allowDestructiveSql(): boolean {
   const args = parseCommandLineArgs();
@@ -646,7 +650,7 @@ export async function resolveSourceConfigs(): Promise<{
       source.init_script = getSqliteInMemorySetupSql();
     }
 
-    // Single-DSN mode: default to read-only unless --allow-destructive-sql is passed
+    // Single-DSN mode: read-only by default; require --allow-destructive-sql=true for writes
     const readOnly = !allowDestructiveSql();
     const tools: ToolConfig[] = [
       { name: "execute_sql", source: sourceId, readonly: readOnly },

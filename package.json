@@ -1,6 +1,6 @@
 {
   "name": "badger-db-mcp",
-  "version": "0.19.7",
+  "version": "0.19.8",
   "mcpName": "badger-db-mcp",
   "description": "Badger DB MCP — minimal, token-efficient Database MCP Server for PostgreSQL, MySQL, SQL Server, SQLite, MariaDB",
   "repository": {

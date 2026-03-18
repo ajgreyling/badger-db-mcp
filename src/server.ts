@@ -146,7 +146,7 @@ See documentation for more details on configuring database connections.
 
     if (sourceConfigsData.defaultReadonly) {
       activeModes.push("READ-ONLY");
-      modeDescriptions.push("destructive SQL disabled (use --allow-destructive-sql to enable)");
+      modeDescriptions.push("destructive SQL disabled (use --allow-destructive-sql=true to enable)");
     }
 
     // Output mode information

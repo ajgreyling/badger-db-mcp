@@ -363,13 +363,18 @@ describe('Environment Configuration Tests', () => {
       expect(allowDestructiveSql()).toBe(false);
     });
 
-    it('should return true when --allow-destructive-sql is passed', () => {
+    it('should return false when --allow-destructive-sql is passed without value (bare flag)', () => {
       process.argv = ['node', 'script.js', '--allow-destructive-sql', '--dsn=postgres://localhost/db'];
-      expect(allowDestructiveSql()).toBe(true);
+      expect(allowDestructiveSql()).toBe(false);
     });
 
     it('should return true when --allow-destructive-sql=true is passed', () => {
       process.argv = ['node', 'script.js', '--allow-destructive-sql=true'];
+      expect(allowDestructiveSql()).toBe(true);
+    });
+
+    it('should return true when --allow-destructive-sql true is passed (space-separated)', () => {
+      process.argv = ['node', 'script.js', '--allow-destructive-sql', 'true'];
       expect(allowDestructiveSql()).toBe(true);
     });
   });
@@ -395,9 +400,9 @@ describe('Environment Configuration Tests', () => {
       expect(result!.defaultReadonly).toBe(true);
     });
 
-    it('should set execute_sql readonly false when --allow-destructive-sql is passed', async () => {
+    it('should set execute_sql readonly false when --allow-destructive-sql=true is passed', async () => {
       process.env.DSN = 'postgres://user:pass@localhost:5432/mydb';
-      process.argv = ['node', 'script.js', '--allow-destructive-sql'];
+      process.argv = ['node', 'script.js', '--allow-destructive-sql=true'];
 
       const result = await resolveSourceConfigs();
 
@@ -406,6 +411,19 @@ describe('Environment Configuration Tests', () => {
       expect(executeSql).toBeDefined();
       expect(executeSql!.readonly).toBe(false);
       expect(result!.defaultReadonly).toBeFalsy();
+    });
+
+    it('should keep execute_sql readonly when --allow-destructive-sql is passed without =true', async () => {
+      process.env.DSN = 'postgres://user:pass@localhost:5432/mydb';
+      process.argv = ['node', 'script.js', '--allow-destructive-sql'];
+
+      const result = await resolveSourceConfigs();
+
+      expect(result).not.toBeNull();
+      const executeSql = result!.tools!.find((t) => t.name === 'execute_sql');
+      expect(executeSql).toBeDefined();
+      expect(executeSql!.readonly).toBe(true);
+      expect(result!.defaultReadonly).toBe(true);
     });
   });
 

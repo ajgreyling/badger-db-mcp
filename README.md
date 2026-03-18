@@ -35,7 +35,7 @@ Badger DB MCP is a zero-dependency, token efficient MCP server implementing the 
 - **Local Development First**: Zero dependency, token efficient with just two MCP tools to maximize context window
 - **Multi-Database**: PostgreSQL, MySQL, MariaDB, SQL Server, and SQLite through a single interface
 - **Multi-Connection**: Connect to multiple databases simultaneously with TOML configuration
-- **Guardrails**: Read-only mode, row limiting, and query timeout to prevent runaway operations
+- **Guardrails**: Read-only by default (single-DSN mode); use `--allow-destructive-sql=true` to allow writes. Row limiting and query timeout to prevent runaway operations
 - **Secure Access**: SSH tunneling and SSL/TLS encryption
 
 ## Supported Databases
@@ -85,6 +85,8 @@ npx @bytebase/dbhub@latest --transport http --port 8080 --dsn "postgres://user:p
 ```bash
 npx @bytebase/dbhub@latest --transport http --port 8080 --demo
 ```
+
+When using a single DSN (no TOML config), the server runs in **read-only mode** by default; only SELECT and other read-only SQL is allowed. Pass `--allow-destructive-sql=true` to allow INSERT/UPDATE/DELETE/MERGE and similar operations.
 
 See [Command-Line Options](https://dbhub.ai/config/command-line) for all available parameters.
 
